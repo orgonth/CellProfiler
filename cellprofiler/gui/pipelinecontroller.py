@@ -2067,6 +2067,7 @@ class PipelineController(object):
 
     def on_pathlist_file_delete(self, paths):
         self.__pipeline.remove_urls(paths)
+        self.__pipeline.file_list_edited = True
         self.__workspace.file_list.remove_files_from_filelist(paths)
         self.__workspace.invalidate_image_set()
 
@@ -2112,6 +2113,7 @@ class PipelineController(object):
         )
         if result == wx.YES:
             self.__pipeline.clear_urls()
+            self.__pipeline.file_list_edited = True
             self.__workspace.file_list.clear_filelist()
             self.__workspace.invalidate_image_set()
 
@@ -2221,6 +2223,7 @@ class PipelineController(object):
                 interrupt[0] = not keep_going
             interrupt[0] = True
         self.__workspace.invalidate_image_set()
+        self.__pipeline.file_list_edited = True
 
     def on_pathlist_drop_text(self, x, y, text):
         pathnames = [p.strip() for p in re.split("[\r\n]+", text.strip())]
